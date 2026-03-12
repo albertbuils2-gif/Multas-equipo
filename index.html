@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<title>Multas del Equipo</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="sidebar">
+
+<h2>⚽ Multas</h2>
+
+<ul>
+
+<li onclick="showPage('dashboard')">Dashboard</li>
+<li onclick="showPage('jugadores')">Jugadores</li>
+<li onclick="showPage('multas')">Multas</li>
+
+</ul>
+
+</div>
+
+<div class="content">
+
+<div id="dashboard" class="page active">
+
+<h1>Dashboard</h1>
+
+<div class="cards">
+
+<div class="card">
+<h3>Dinero total</h3>
+<div id="total" class="bigNumber">0</div>
+</div>
+
+<div class="card">
+<h3>Total multas</h3>
+<div id="multasTotal" class="bigNumber">0</div>
+</div>
+
+</div>
+
+<div class="card">
+<canvas id="jugadoresChart"></canvas>
+</div>
+
+</div>
+
+<div id="jugadores" class="page">
+
+<h1>Jugadores</h1>
+
+<table id="tablaJugadores">
+
+<thead>
+<tr>
+<th>Jugador</th>
+<th>Multas</th>
+<th>Total €</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+<div id="multas" class="page">
+
+<h1>Multas</h1>
+
+<table id="tablaMultas">
+
+<thead>
+<tr>
+<th>Jugador</th>
+<th>Multa</th>
+<th>Fecha</th>
+<th>Monto</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
