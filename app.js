@@ -15,22 +15,27 @@ fetch(API)
 .then(data=>{
 
 let total=0;
-let jugadores={};
-let multasJugador={};
 
-const tablaMultas=document.querySelector("#tablaMultas tbody");
+let dineroJugador={}
+let multasJugador={}
+let dineroMes={}
+
+const tablaMultas=document.querySelector("#tablaMultas tbody")
 
 data.forEach(m=>{
 
-let monto=Number(m.monto);
+let monto=Number(m.monto)
 
-total+=monto;
+total+=monto
 
-if(!jugadores[m.Jugador]) jugadores[m.Jugador]=0;
-jugadores[m.Jugador]+=monto;
+if(!dineroJugador[m.Jugador]) dineroJugador[m.Jugador]=0
+dineroJugador[m.Jugador]+=monto
 
-if(!multasJugador[m.Jugador]) multasJugador[m.Jugador]=0;
-multasJugador[m.Jugador]++;
+if(!multasJugador[m.Jugador]) multasJugador[m.Jugador]=0
+multasJugador[m.Jugador]++
+
+if(!dineroMes[m.mes]) dineroMes[m.mes]=0
+dineroMes[m.mes]+=monto
 
 tablaMultas.innerHTML+=`
 <tr>
@@ -39,36 +44,80 @@ tablaMultas.innerHTML+=`
 <td>${m.fecha}</td>
 <td>${m.monto}</td>
 </tr>
-`;
+`
 
-});
+})
 
-document.getElementById("total").innerText=total;
-document.getElementById("multasTotal").innerText=data.length;
+document.getElementById("total").innerText=total
+document.getElementById("multasTotal").innerText=data.length
+document.getElementById("jugadoresTotal").innerText=Object.keys(dineroJugador).length
 
-const tablaJugadores=document.querySelector("#tablaJugadores tbody");
+const tablaJugadores=document.querySelector("#tablaJugadores tbody")
 
-Object.keys(jugadores).forEach(j=>{
+Object.keys(dineroJugador).forEach(j=>{
 
 tablaJugadores.innerHTML+=`
 <tr>
 <td>${j}</td>
 <td>${multasJugador[j]}</td>
-<td>${jugadores[j]}</td>
+<td>${dineroJugador[j]}</td>
 </tr>
-`;
+`
 
-});
+})
 
-new Chart(document.getElementById("jugadoresChart"),{
+Chart.register(ChartDataLabels)
+
+const configBar={
+plugins:{
+datalabels:{
+color:"white",
+anchor:"center",
+align:"center",
+font:{
+weight:"bold"
+}
+}
+}
+}
+
+new Chart(document.getElementById("chartDineroJugador"),{
 type:"bar",
 data:{
-labels:Object.keys(jugadores),
+labels:Object.keys(dineroJugador),
 datasets:[{
-label:"€ por jugador",
-data:Object.values(jugadores)
+label:"€",
+data:Object.values(dineroJugador),
+backgroundColor:"#cc0000"
+}]
+},
+options:configBar
+})
+
+new Chart(document.getElementById("chartMultasJugador"),{
+type:"bar",
+data:{
+labels:Object.keys(multasJugador),
+datasets:[{
+label:"Multas",
+data:Object.values(multasJugador),
+backgroundColor:"#ff4d4d"
+}]
+},
+options:configBar
+})
+
+new Chart(document.getElementById("chartMes"),{
+type:"line",
+data:{
+labels:Object.keys(dineroMes),
+datasets:[{
+label:"€ por mes",
+data:Object.values(dineroMes),
+borderColor:"#cc0000",
+fill:false
 }]
 }
-});
+})
 
-});
+})
